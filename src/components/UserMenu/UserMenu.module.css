@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    margin-left: auto;
+};
+
+.avatar {
+    margin-right: 4px;
+    border-radius: "50%";
+};
+
+.name {
+    font-weight: 700;
+    margin-right: 12px;
+};

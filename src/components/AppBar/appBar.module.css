@@ -1,0 +1,26 @@
+.AppBar {
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  min-height: 80px;
+  /* padding-left: 30px;
+  padding-right: 30px; */
+  border-bottom: 3px solid rgb(202, 197, 197);
+  line-height: 1.5;
+
+}
+body {
+  margin: 0;
+  background-color: rgb(180, 225, 213);
+  color: #212121;
+  line-height: 1.5;
+}
+
+html {
+  text-align: center;
+  max-width: 600px;
+  align-items: center;
+  margin: 0 auto;
+}
