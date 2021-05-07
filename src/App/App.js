@@ -4,7 +4,7 @@ import { authOperations } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import AppBar from "../components/AppBar/AppBar";
 import Loader from "../data/Loader";
-import Container from '../components/container/container';
+import Container from '../components/Conteiner/Container';
 import routes from "../routes";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import PublicRoute from "../components/PublicRoute/PublicRoute";
