@@ -1,87 +1,83 @@
-import { Component } from "react";
-import { connect } from "react-redux";
+import React, { useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { contactsOperations, contactsSelectors } from "../../redux/contacts";
-import { v4 as uuidv4 } from 'uuid';
 import s from "../ContactList/phonebook.module.css";
 
+export default function ContactForm() {
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const contacts = useSelector(contactsSelectors.getAllContacts);
 
-class ContactForm extends Component {
-  state = {
-    name: "",
-    number: "",
-  };
-
-  handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { name } = this.state;
-    const { contacts , onSubmit } = this.props;
-   
-    const newName = contacts.find(
-      (item) => item.name.toLowerCase() === name.toLowerCase()
-    );
-    if (newName) {
-      alert(`${name} is already in a list`);
-      return;
+    switch (name) {
+      case "name":
+        setName(value);
+        break;
+      case "number":
+        setNumber(value);
+        break;
+      default:
+        console.warn(`Тип поля name - ${name} не обрабатывается`);
     }
+  }, []);
 
-    onSubmit(this.state);
-    this.reset();
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      const newName = contacts.find(
+        (item) => item.name.toLowerCase() === name.toLowerCase()
+      );
+
+      if (newName) {
+        alert(`${name} is already in a list`);
+        return;
+      }
+
+      dispatch(contactsOperations.addContact({ name, number }));
+      reset();
+    },
+    [contacts, dispatch, name, number]
+  );
+
+  const reset = () => {
+    this.setState({ name: "", number: "" });
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
-  };
-
-  render() {
-    const { name, number } = this.state;
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label className={s.label}>
-            Name
-            <input
-              id={uuidv4()}
-              className={s.input}
-              value={name}
-              onChange={this.handleChange}
-              type="text"
-              name="name"
-              placeholder="name"
-            />
-          </label>
-          <label className={s.label}>
-            Number
-            <input
-              className={s.input}
-              id={uuidv4()}
-              value={number}
-              onChange={this.handleChange}
-              type="text"
-              name="number"
-              placeholder="number"
-            />
-          </label>
-          <button className={s.btn} type="submit">
-            Add contact
-          </button>
-        </form>
-      </div>
-    );
-  }
-};
-
-
-const mapStateToProps = (state) => ({
-  contacts: contactsSelectors.getAllContacts(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (contact) => dispatch(contactsOperations.addContact(contact)),
-});
-    
-export default connect(mapStateToProps,mapDispatchToProps) (ContactForm);
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label className={s.label}>
+          Name
+          <input
+            // id={uuidv4()}
+            className={s.input}
+            value={name}
+            onChange={handleChange}
+            type="text"
+            name="name"
+            placeholder="name"
+          />
+        </label>
+        <label className={s.label}>
+          Number
+          <input
+            className={s.input}
+            // id={uuidv4()}
+            value={number}
+            onChange={handleChange}
+            type="text"
+            name="number"
+            placeholder="number"
+          />
+        </label>
+        <button className={s.btn} type="submit">
+          Add contact
+        </button>
+      </form>
+    </div>
+  );
+}

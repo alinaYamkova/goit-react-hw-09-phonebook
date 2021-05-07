@@ -1,27 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import routes from '../../routes';
 import { authSelectors } from '../../redux/auth';
 import s from './Navigation.module.css';
 
-// const style = {
-//   link: {
-//     display: "inline-block",
-//     textDecoration: "none",
-//     padding: 12,
-//     fontWeight: 900,
-//     color: "#ffffff",
-//   },
-//   activeLink: {
-//       color: "red",
-//   },
-// };
-
-const Navigation = ({ isAuthenticated }) => {
+export default function Navigation() {
+  const isAuthenticated = useSelector(authSelectors.getIsAuthenticated);
   return (
-    // <div>
       <nav>
         <NavLink
           to={routes.home}
@@ -42,16 +30,15 @@ const Navigation = ({ isAuthenticated }) => {
           </NavLink>
         )}
       </nav>
-    // </div>
   );
 };
 
-Navigation.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
+// Navigation.propTypes = {
+//   isAuthenticated: PropTypes.bool,
+// };
 
-const mapStateToProps = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
+// const mapStateToProps = state => ({
+//   isAuthenticated: authSelectors.getIsAuthenticated(state),
+// });
 
-export default connect(mapStateToProps)(Navigation);
+// export default connect(mapStateToProps)(Navigation);
