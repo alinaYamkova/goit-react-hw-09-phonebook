@@ -36,8 +36,8 @@
   padding: 6px;
 }
 
-nav  a:nth-last-child(2) {
-  margin: 0 15px;
+nav > a {
+  margin: 0 15px 0 0;
 }
 
 a:hover {
